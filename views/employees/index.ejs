@@ -1,0 +1,350 @@
+<div class="p-4 lg:p-6">
+    <!-- Header Section -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 lg:mb-8 gap-4">
+        <div>
+            <h1 class="text-2xl lg:text-3xl font-bold text-gray-800">Employees</h1>
+            <p class="text-gray-600 mt-1">Manage your team members efficiently</p>
+        </div>
+        <a href="/employees/new" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-md flex items-center justify-center transition-colors duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <i class="fas fa-user-plus mr-2"></i>
+            <span class="hidden sm:inline">Add New Employee</span>
+            <span class="sm:hidden">Add</span>
+        </a>
+    </div>
+    
+    <!-- Search and Filter Section -->
+    <div class="bg-white rounded-lg shadow-md border border-gray-200 mb-6 lg:mb-8">
+        <div class="p-4 lg:p-6">
+            <form method="GET" action="/employees" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <!-- Search -->
+                <div>
+                    <label for="search" class="block text-sm font-medium text-gray-700 mb-2">Search</label>
+                    <input 
+                        type="text" 
+                        id="search" 
+                        name="search" 
+                        value="<%= filters.search %>"
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200 text-gray-800 placeholder-gray-400"
+                        placeholder="Search by name or email..."
+                    >
+                </div>
+                
+                <!-- Department Filter -->
+                <div>
+                    <label for="department" class="block text-sm font-medium text-gray-700 mb-2">Department</label>
+                    <select 
+                        id="department" 
+                        name="department"
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200 text-gray-800"
+                    >
+                        <option value="">All Departments</option>
+                        <% if (departments && departments.length > 0) { %>
+                            <% departments.forEach(department => { %>
+                                <option value="<%= department._id %>" <%= filters.department === department._id.toString() ? 'selected' : '' %>>
+                                    <%= department.name %>
+                                </option>
+                            <% }); %>
+                        <% } %>
+                    </select>
+                </div>
+                
+                <!-- Job Title Filter -->
+                <div>
+                    <label for="jobTitle" class="block text-sm font-medium text-gray-700 mb-2">Job Title</label>
+                    <input 
+                        type="text" 
+                        id="jobTitle" 
+                        name="jobTitle" 
+                        value="<%= filters.jobTitle %>"
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200 text-gray-800 placeholder-gray-400"
+                        placeholder="Filter by job title..."
+                    >
+                </div>
+                
+                <!-- Actions -->
+                <div class="flex items-end justify-start space-x-3">
+                    <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md transition-colors duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <i class="fas fa-search mr-2"></i>
+                        <span class="hidden sm:inline">Search</span>
+                        <span class="sm:hidden">Go</span>
+                    </button>
+                    <a href="/employees" class="px-5 py-2.5 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md transition-colors duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <i class="fas fa-times mr-2"></i>
+                        Clear
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Employees List -->
+    <div class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
+        <% if (employees && employees.length > 0) { %>
+            <!-- Desktop Table View -->
+            <div class="overflow-x-auto hidden lg:block">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employee</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Job Info</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Department</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
+                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <% employees.forEach(employee => { %>
+                        <tr class="hover:bg-gray-50 transition-colors duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10">
+                                        <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                                            <span class="text-sm font-medium text-blue-800">
+                                                <%= employee.firstName.charAt(0).toUpperCase() %><%= employee.lastName.charAt(0).toUpperCase() %>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-medium text-gray-900">
+                                            <%= employee.firstName %> <%= employee.lastName %>
+                                        </div>
+                                        <div class="text-sm text-gray-500">
+                                            ID: <%= employee._id.toString().slice(-6).toUpperCase() %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900"><%= employee.email %></div>
+                                <div class="text-sm text-gray-500"><%= employee.phone || 'N/A' %></div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900"><%= employee.jobTitle %></div>
+                                <div class="text-sm text-gray-500">₹<%= employee.salary.toLocaleString() %>/year</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <% if (employee.department) { %>
+                                    <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                        <%= employee.department.name %>
+                                    </span>
+                                    <% if (employee.supervisor) { %>
+                                        <div class="text-xs text-gray-500 mt-1">
+                                            Supervisor: <%= employee.supervisor.firstName %> <%= employee.supervisor.lastName %>
+                                        </div>
+                                    <% } %>
+                                <% } else { %>
+                                    <span class="text-gray-500 italic">No department</span>
+                                <% } %>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900"><%= employee.city %>, <%= employee.state %></div>
+                                <div class="text-sm text-gray-500"><%= employee.country %></div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <div class="flex items-center justify-end space-x-3">
+                                    <a href="/employees/<%= employee._id %>" class="text-blue-600 hover:text-blue-800 transition-colors duration-200 text-lg" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="/employees/<%= employee._id %>/edit" class="text-green-600 hover:text-green-800 transition-colors duration-200 text-lg" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <button onclick="deleteEmployee('<%= employee._id %>', '<%= employee.firstName %> <%= employee.lastName %>')" class="text-red-600 hover:text-red-800 transition-colors duration-200 text-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 rounded-md" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Mobile Card View -->
+            <div class="lg:hidden block p-4">
+                <% employees.forEach(employee => { %>
+                <div class="bg-white rounded-lg shadow-md border border-gray-200 mb-4 p-4">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                            <span class="text-sm font-medium text-blue-800">
+                                <%= employee.firstName.charAt(0).toUpperCase() %><%= employee.lastName.charAt(0).toUpperCase() %>
+                            </span>
+                        </div>
+                        <div class="ml-3 flex-1">
+                            <h3 class="font-medium text-gray-900"><%= employee.firstName %> <%= employee.lastName %></h3>
+                            <p class="text-sm text-gray-600"><%= employee.jobTitle %></p>
+                        </div>
+                        <% if (employee.department) { %>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                <%= employee.department.name %>
+                            </span>
+                        <% } %>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 text-sm mb-4">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 uppercase mb-1">Email</label>
+                            <p class="text-gray-800"><%= employee.email %></p>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 uppercase mb-1">Phone</label>
+                            <p class="text-gray-800"><%= employee.phone || 'N/A' %></p>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 uppercase mb-1">Salary</label>
+                            <p class="text-gray-800">₹<%= employee.salary.toLocaleString() %>/year</p>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 uppercase mb-1">Location</label>
+                            <p class="text-gray-800"><%= employee.city %>, <%= employee.state %></p>
+                        </div>
+                        <% if (employee.supervisor) { %>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 uppercase mb-1">Supervisor</label>
+                            <p class="text-gray-800"><%= employee.supervisor.firstName %> <%= employee.supervisor.lastName %></p>
+                        </div>
+                        <% } %>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-2">
+                        <a href="/employees/<%= employee._id %>" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-200 shadow-sm">
+                            <i class="fas fa-eye mr-2"></i>
+                            View
+                        </a>
+                        <a href="/employees/<%= employee._id %>/edit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 transition-colors duration-200 shadow-sm">
+                            <i class="fas fa-edit mr-2"></i>
+                            Edit
+                        </a>
+                        <button onclick="deleteEmployee('<%= employee._id %>', '<%= employee.firstName %> <%= employee.lastName %>')" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 transition-colors duration-200 shadow-sm">
+                            <i class="fas fa-trash mr-2"></i>
+                            Delete
+                        </button>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+            
+            <!-- Pagination -->
+            <% if (pagination && pagination.totalPages > 1) { %>
+            <div class="bg-white px-4 py-4 border-t border-gray-200">
+                <div class="flex flex-col sm:flex-row justify-between items-center">
+                    <!-- Mobile Pagination -->
+                    <div class="flex justify-between sm:hidden w-full mb-4">
+                        <% if (pagination.hasPrev) { %>
+                            <a href="?page=<%= pagination.prevPage %><%= filters.search ? '&search=' + encodeURIComponent(filters.search) : '' %><%= filters.department ? '&department=' + filters.department : '' %><%= filters.jobTitle ? '&jobTitle=' + encodeURIComponent(filters.jobTitle) : '' %>" 
+                               class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-200 shadow-sm">
+                                <i class="fas fa-chevron-left mr-2"></i>
+                                Previous
+                            </a>
+                        <% } %>
+                        <% if (pagination.hasNext) { %>
+                            <a href="?page=<%= pagination.nextPage %><%= filters.search ? '&search=' + encodeURIComponent(filters.search) : '' %><%= filters.department ? '&department=' + filters.department : '' %><%= filters.jobTitle ? '&jobTitle=' + encodeURIComponent(filters.jobTitle) : '' %>" 
+                               class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-200 shadow-sm">
+                                Next
+                                <i class="fas fa-chevron-right ml-2"></i>
+                            </a>
+                        <% } %>
+                    </div>
+                    
+                    <!-- Desktop Pagination -->
+                    <div class="hidden sm:flex sm:items-center sm:justify-between w-full">
+                        <div class="text-sm text-gray-700">
+                            Showing <span class="font-medium"><%= ((pagination.currentPage - 1) * 10) + 1 %></span>
+                            to <span class="font-medium"><%= Math.min(pagination.currentPage * 10, pagination.totalEmployees) %></span>
+                            of <span class="font-medium"><%= pagination.totalEmployees %></span> employees
+                        </div>
+                        <div class="">
+                            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                <% if (pagination.hasPrev) { %>
+                                    <a href="?page=<%= pagination.prevPage %><%= filters.search ? '&search=' + encodeURIComponent(filters.search) : '' %><%= filters.department ? '&department=' + filters.department : '' %><%= filters.jobTitle ? '&jobTitle=' + encodeURIComponent(filters.jobTitle) : '' %>" 
+                                       class="relative inline-flex items-center px-3 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors duration-200">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                <% } %>
+                                
+                                <% for (let i = Math.max(1, pagination.currentPage - 2); i <= Math.min(pagination.totalPages, pagination.currentPage + 2); i++) { %>
+                                    <% if (i === pagination.currentPage) { %>
+                                        <span class="relative inline-flex items-center px-4 py-2 border border-indigo-500 bg-indigo-50 text-sm font-medium text-indigo-600">
+                                            <%= i %>
+                                        </span>
+                                    <% } else { %>
+                                        <a href="?page=<%= i %><%= filters.search ? '&search=' + encodeURIComponent(filters.search) : '' %><%= filters.department ? '&department=' + filters.department : '' %><%= filters.jobTitle ? '&jobTitle=' + encodeURIComponent(filters.jobTitle) : '' %>" 
+                                           class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors duration-200">
+                                            <%= i %>
+                                        </a>
+                                    <% } %>
+                                <% } %>
+                                
+                                <% if (pagination.hasNext) { %>
+                                    <a href="?page=<%= pagination.nextPage %><%= filters.search ? '&search=' + encodeURIComponent(filters.search) : '' %><%= filters.department ? '&department=' + filters.department : '' %><%= filters.jobTitle ? '&jobTitle=' + encodeURIComponent(filters.jobTitle) : '' %>" 
+                                       class="relative inline-flex items-center px-3 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors duration-200">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                <% } %>
+                            </nav>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Info (shown below controls) -->
+                    <div class="sm:hidden text-center mt-3">
+                        <p class="text-xs text-gray-500">
+                            Page <%= pagination.currentPage %> of <%= pagination.totalPages %> • <%= pagination.totalEmployees %> employees
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        <% } else { %>
+            <!-- Empty State -->
+            <div class="text-center py-12 px-4">
+                <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-users text-gray-400 text-3xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">No employees found</h3>
+                <p class="text-gray-600 mb-6">
+                    <% if (filters.search || filters.department || filters.jobTitle) { %>
+                        No employees match your current filters. Try adjusting your search criteria.
+                    <% } else { %>
+                        Get started by adding your first employee.
+                    <% } %>
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
+                    <% if (filters.search || filters.department || filters.jobTitle) { %>
+                        <a href="/employees" class="w-full sm:w-auto px-6 py-2.5 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors duration-200 text-center shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            <i class="fas fa-times mr-2"></i>
+                            Clear Filters
+                        </a>
+                    <% } %>
+                    <a href="/employees/new" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-md inline-flex items-center justify-center transition-colors duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <i class="fas fa-user-plus mr-2"></i>
+                        Add Employee
+                    </a>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<script>
+    function deleteEmployee(id, name) {
+        if (confirm(`Are you sure you want to delete the employee "${name}"?`)) {
+            fetch(`/employees/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert('Error deleting employee');
+                }
+            })
+            .catch(error => {
+                alert('Error deleting employee');
+                console.error('Error:', error);
+            });
+        }
+    }
+</script>
