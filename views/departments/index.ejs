@@ -1,0 +1,109 @@
+<div class="p-4 lg:p-6">
+    <!-- Header Section -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 lg:mb-8">
+        <div>
+            <h1 class="text-2xl lg:text-3xl font-bold text-gray-800">Departments</h1>
+            <p class="text-gray-600 mt-1">Manage your organization's departments efficiently</p>
+        </div>
+        <a href="/departments/new" class="mt-4 sm:mt-0 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-md flex items-center transition-colors duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <i class="fas fa-plus mr-2"></i>
+            Add New Department
+        </a>
+    </div>
+    
+    <!-- Departments List -->
+    <div class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
+        <% if (departments && departments.length > 0) { %>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Budget</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Head</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employees</th>
+                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <% departments.forEach(department => { %>
+                        <tr class="hover:bg-gray-50 transition-colors duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="font-medium text-gray-900"><%= department.name %></div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="text-sm text-gray-700 max-w-xs truncate"><%= department.description || 'N/A' %></div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900">₹<%= department.budget ? department.budget.toLocaleString() : '0' %></div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <% if (department.headOfDepartment) { %>
+                                    <div class="text-sm text-gray-900"><%= department.headOfDepartment.firstName %> <%= department.headOfDepartment.lastName %></div>
+                                <% } else { %>
+                                    <span class="text-gray-500 italic">Not assigned</span>
+                                <% } %>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                                    <%= department.employeeCount || 0 %>
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <div class="flex items-center justify-end space-x-3">
+                                    <a href="/departments/<%= department._id %>" class="text-blue-600 hover:text-blue-800 transition-colors duration-200 text-lg">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="/departments/<%= department._id %>/edit" class="text-green-600 hover:text-green-800 transition-colors duration-200 text-lg">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <button onclick="deleteDepartment('<%= department._id %>', '<%= department.name %>')" class="text-red-600 hover:text-red-800 transition-colors duration-200 text-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 rounded-md">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        <% } else { %>  <!-- Empty State -->
+            <div class="text-center py-12 px-4">
+                <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-sitemap text-gray-400 text-3xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">No departments found</h3>
+                <p class="text-gray-600 mb-6">Get started by creating your first department.</p>
+                <a href="/departments/new" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-md inline-flex items-center transition-colors duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <i class="fas fa-plus mr-2"></i>
+                    Add Department
+                </a>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<script>
+    function deleteDepartment(id, name) {
+        if (confirm(`Are you sure you want to delete the department "${name}"?`)) {
+            fetch(`/departments/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert('Error deleting department');
+                }
+            })
+            .catch(error => {
+                alert('Error deleting department');
+                console.error('Error:', error);
+            });
+        }
+    }
+</script>

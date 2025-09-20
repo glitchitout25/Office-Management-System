@@ -1,0 +1,73 @@
+<div class="">
+    <!-- Header Section -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900"><%= employee.firstName %> <%= employee.lastName %></h1>
+            <p class="text-gray-600">Details for <%= employee.jobTitle %></p>
+        </div>
+        <div class="flex space-x-3">
+            <a href="/employees/<%= employee._id %>/edit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center transition-colors duration-200">
+                <i class="fas fa-edit mr-2"></i>
+                Edit Employee
+            </a>
+            <a href="/employees" class="text-gray-600 hover:text-gray-900 flex items-center transition-colors duration-200">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Back to Employees
+            </a>
+        </div>
+    </div>
+    
+    <!-- Employee Details -->
+    <div class="bg-white rounded-lg shadow border border-gray-200 p-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Personal Information -->
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">Personal Information</h3>
+                <p class="text-gray-700 mb-2"><strong>Full Name:</strong> <%= employee.firstName %> <%= employee.lastName %></p>
+                <p class="text-gray-700 mb-2"><strong>Email:</strong> <%= employee.email %></p>
+                <p class="text-gray-700 mb-2"><strong>Phone:</strong> <%= employee.phone || 'N/A' %></p>
+                <p class="text-gray-700 mb-2"><strong>Date of Birth:</strong> <%= employee.dateOfBirth ? new Date(employee.dateOfBirth).toLocaleDateString() : 'N/A' %></p>
+                <p class="text-gray-700 mb-2"><strong>Gender:</strong> <%= employee.gender || 'N/A' %></p>
+            </div>
+            
+            <!-- Work Information -->
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">Work Information</h3>
+                <p class="text-gray-700 mb-2"><strong>Job Title:</strong> <%= employee.jobTitle %></p>
+                <p class="text-gray-700 mb-2">
+                    <strong>Department:</strong> 
+                    <% if (employee.department) { %>
+                        <a href="/departments/<%= employee.department._id %>" class="text-blue-600 hover:text-blue-800"><%= employee.department.name %></a>
+                    <% } else { %>
+                        N/A
+                    <% } %>
+                </p>
+                <p class="text-gray-700 mb-2">
+                    <strong>Supervisor:</strong> 
+                    <% if (employee.supervisor) { %>
+                        <a href="/employees/<%= employee.supervisor._id %>" class="text-blue-600 hover:text-blue-800"><%= employee.supervisor.firstName %> <%= employee.supervisor.lastName %></a>
+                    <% } else { %>
+                        N/A
+                    <% } %>
+                </p>
+                <p class="text-gray-700 mb-2"><strong>Salary:</strong> ₹<%= employee.salary ? employee.salary.toLocaleString() : '0' %></p>
+                <p class="text-gray-700 mb-2"><strong>Date of Joining:</strong> <%= employee.dateOfJoining ? employee.dateOfJoining.toLocaleDateString() : 'N/A' %></p>
+            </div>
+
+            <!-- Location Information -->
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">Location Information</h3>
+                <p class="text-gray-700 mb-2"><strong>Address:</strong> <%= employee.address || 'N/A' %></p>
+                <p class="text-gray-700 mb-2"><strong>City:</strong> <%= employee.city || 'N/A' %></p>
+                <p class="text-gray-700 mb-2"><strong>State/Province:</strong> <%= employee.state || 'N/A' %></p>
+                <p class="text-gray-700 mb-2"><strong>Country:</strong> <%= employee.country || 'N/A' %></p>
+                <p class="text-gray-700 mb-2"><strong>Zip Code:</strong> <%= employee.zipCode || 'N/A' %></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional sections could go here, e.g., projects, performance reviews, etc. -->
+
+</div>
+
+<script src="/js/main.js"></script>

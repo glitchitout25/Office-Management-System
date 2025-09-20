@@ -1,0 +1,470 @@
+{
+	"info": {
+		"_postman_id": "office-management-api-collection",
+		"name": "Office Management System API",
+		"description": "Complete API collection for testing the Office Management System endpoints including Departments and Employees CRUD operations with advanced features like pagination, search, and filtering.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000/api",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Departments",
+			"item": [
+				{
+					"name": "Get All Departments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/departments",
+							"host": ["{{baseUrl}}"],
+							"path": ["departments"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Department",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Engineering\",\n  \"description\": \"Software development and technical operations\",\n  \"budget\": 250000\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/departments",
+							"host": ["{{baseUrl}}"],
+							"path": ["departments"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Department by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/departments/{{departmentId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["departments", "{{departmentId}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Department",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Engineering - Updated\",\n  \"description\": \"Software development, technical operations, and innovation\",\n  \"budget\": 300000\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/departments/{{departmentId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["departments", "{{departmentId}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Department",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/departments/{{departmentId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["departments", "{{departmentId}}"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Employees",
+			"item": [
+				{
+					"name": "Get All Employees",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/employees",
+							"host": ["{{baseUrl}}"],
+							"path": ["employees"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Employees with Pagination",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/employees?page=1&limit=5",
+							"host": ["{{baseUrl}}"],
+							"path": ["employees"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Employees",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/employees?search=john",
+							"host": ["{{baseUrl}}"],
+							"path": ["employees"],
+							"query": [
+								{
+									"key": "search",
+									"value": "john"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Employees by Department",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/employees?department={{departmentId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["employees"],
+							"query": [
+								{
+									"key": "department",
+									"value": "{{departmentId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Employees by Job Title",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/employees?jobTitle=developer",
+							"host": ["{{baseUrl}}"],
+							"path": ["employees"],
+							"query": [
+								{
+									"key": "jobTitle",
+									"value": "developer"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Complex Employee Query",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/employees?page=1&limit=10&search=john&department={{departmentId}}&jobTitle=developer",
+							"host": ["{{baseUrl}}"],
+							"path": ["employees"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": "john"
+								},
+								{
+									"key": "department",
+									"value": "{{departmentId}}"
+								},
+								{
+									"key": "jobTitle",
+									"value": "developer"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Employee",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@company.com\",\n  \"phone\": \"+1-555-123-4567\",\n  \"jobTitle\": \"Senior Software Developer\",\n  \"department\": \"{{departmentId}}\",\n  \"supervisor\": null,\n  \"salary\": 95000,\n  \"hireDate\": \"2024-01-15\",\n  \"country\": \"United States\",\n  \"state\": \"California\",\n  \"city\": \"San Francisco\",\n  \"address\": \"123 Tech Street, Apt 4B\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/employees",
+							"host": ["{{baseUrl}}"],
+							"path": ["employees"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Employee with Supervisor",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"email\": \"jane.smith@company.com\",\n  \"phone\": \"+1-555-987-6543\",\n  \"jobTitle\": \"Junior Software Developer\",\n  \"department\": \"{{departmentId}}\",\n  \"supervisor\": \"{{employeeId}}\",\n  \"salary\": 65000,\n  \"hireDate\": \"2024-03-01\",\n  \"country\": \"United States\",\n  \"state\": \"California\",\n  \"city\": \"San Francisco\",\n  \"address\": \"456 Innovation Ave\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/employees",
+							"host": ["{{baseUrl}}"],
+							"path": ["employees"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Employee by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/employees/{{employeeId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["employees", "{{employeeId}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Employee",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@company.com\",\n  \"phone\": \"+1-555-123-4567\",\n  \"jobTitle\": \"Lead Software Developer\",\n  \"department\": \"{{departmentId}}\",\n  \"supervisor\": null,\n  \"salary\": 105000,\n  \"hireDate\": \"2024-01-15\",\n  \"country\": \"United States\",\n  \"state\": \"California\",\n  \"city\": \"San Francisco\",\n  \"address\": \"123 Tech Street, Apt 4B\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/employees/{{employeeId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["employees", "{{employeeId}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Employee",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/employees/{{employeeId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["employees", "{{employeeId}}"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Error Testing",
+			"item": [
+				{
+					"name": "Create Department - Missing Required Field",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"description\": \"Department without name\",\n  \"budget\": 100000\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/departments",
+							"host": ["{{baseUrl}}"],
+							"path": ["departments"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Employee - Invalid Email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Test\",\n  \"lastName\": \"User\",\n  \"email\": \"invalid-email\",\n  \"jobTitle\": \"Test Role\",\n  \"department\": \"{{departmentId}}\",\n  \"salary\": 50000,\n  \"hireDate\": \"2024-01-01\",\n  \"country\": \"United States\",\n  \"state\": \"California\",\n  \"city\": \"San Francisco\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/employees",
+							"host": ["{{baseUrl}}"],
+							"path": ["employees"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Non-existent Department",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/departments/60f1b2a5e4b0c1d2e3f4g5h6",
+							"host": ["{{baseUrl}}"],
+							"path": ["departments", "60f1b2a5e4b0c1d2e3f4g5h6"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Non-existent Employee",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/employees/60f1b2a5e4b0c1d2e3f4g5h6",
+							"host": ["{{baseUrl}}"],
+							"path": ["employees", "60f1b2a5e4b0c1d2e3f4g5h6"]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,77 @@
+<!-- Sidebar for desktop -->
+<aside id="sidebar" class="fixed top-0 left-0 z-50 w-64 h-screen bg-gray-800 text-gray-100 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out shadow-lg">
+    <div class="flex flex-col h-full">
+        <!-- Logo -->
+        <div class="flex items-center justify-between p-6 bg-gray-900">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-building text-white text-sm"></i>
+                </div>
+                <span class="text-xl font-semibold text-white">OMS</span>
+            </div>
+            <button id="sidebar-close" class="lg:hidden text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-md p-2 transition-colors duration-200">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="flex-1 px-4 py-6 space-y-2">
+            <!-- Dashboard -->
+            <a href="/" class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-gray-700 hover:text-white transition-colors duration-200 active:bg-indigo-600 active:text-white">
+                <i class="fas fa-tachometer-alt w-5 h-5 mr-3"></i>
+                <span>Dashboard</span>
+            </a>
+            
+            <!-- Departments -->
+            <div class="space-y-1">
+                <a href="/departments" class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-gray-700 hover:text-white transition-colors duration-200 active:bg-indigo-600 active:text-white">
+                    <i class="fas fa-sitemap w-5 h-5 mr-3"></i>
+                    <span>Departments</span>
+                </a>
+                <div class="ml-6 space-y-1 border-l border-gray-700">
+                    <a href="/departments/new" class="flex items-center px-4 py-2 text-sm text-gray-400 rounded-lg hover:bg-gray-700 hover:text-white transition-colors duration-200 active:bg-indigo-600 active:text-white">
+                        <i class="fas fa-plus w-4 h-4 mr-2"></i>
+                        <span>Add Department</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Employees -->
+            <div class="space-y-1">
+                <a href="/employees" class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-gray-700 hover:text-white transition-colors duration-200 active:bg-indigo-600 active:text-white">
+                    <i class="fas fa-users w-5 h-5 mr-3"></i>
+                    <span>Employees</span>
+                </a>
+                <div class="ml-6 space-y-1 border-l border-gray-700">
+                    <a href="/employees/new" class="flex items-center px-4 py-2 text-sm text-gray-400 rounded-lg hover:bg-gray-700 hover:text-white transition-colors duration-200 active:bg-indigo-600 active:text-white">
+                        <i class="fas fa-user-plus w-4 h-4 mr-2"></i>
+                        <span>Add Employee</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Reports -->
+            <a href="/reports" class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-gray-700 hover:text-white transition-colors duration-200 active:bg-indigo-600 active:text-white">
+                <i class="fas fa-chart-bar w-5 h-5 mr-3"></i>
+                <span>Reports</span>
+            </a>
+        </nav>
+        
+        <!-- User Info and Logout -->
+        <div class="p-4 border-t border-gray-700 bg-gray-900">
+            <div class="flex items-center space-x-3 mb-4">
+                <div class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center">
+                    <i class="fas fa-user text-gray-400"></i>
+                </div>
+                <div>
+                    <p class="text-sm font-medium text-white">Administrator</p>
+                    <p class="text-xs text-gray-400">admin@company.com</p>
+                </div>
+            </div>
+            <a href="/auth/logout" class="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200">
+                <i class="fas fa-sign-out-alt mr-2"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+</aside>

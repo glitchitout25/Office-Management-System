@@ -1,0 +1,276 @@
+<div class="p-4 lg:p-6">
+    <!-- Header Section -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 lg:mb-8">
+        <div>
+            <h1 class="text-2xl lg:text-3xl font-bold text-gray-800">Financial Report</h1>
+            <p class="text-gray-600 mt-1">Budget analysis, salary costs, and financial insights</p>
+        </div>
+        <a href="/reports" class="mt-4 sm:mt-0 text-indigo-600 hover:text-indigo-800 flex items-center transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 rounded-md p-1">
+            <i class="fas fa-arrow-left mr-2"></i>
+            Back to Reports
+        </a>
+    </div>
+    
+    <!-- Budget Summary Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-200">
+            <div class="flex items-center">
+                <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                    <i class="fas fa-dollar-sign text-xl"></i>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-600">Total Budget</p>
+                    <p class="text-2xl font-bold text-gray-900">₹<%= budgetSummary.totalBudget ? budgetSummary.totalBudget.toLocaleString() : '0' %></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-200">
+            <div class="flex items-center">
+                <div class="p-3 rounded-full bg-green-100 text-green-600">
+                    <i class="fas fa-check-circle text-xl"></i>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-600">Departments with Budget</p>
+                    <p class="text-2xl font-bold text-gray-900"><%= budgetSummary.departmentsWithBudget %></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-200">
+            <div class="flex items-center">
+                <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
+                    <i class="fas fa-exclamation-triangle text-xl"></i>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-600">Departments without Budget</p>
+                    <p class="text-2xl font-bold text-gray-900"><%= budgetSummary.departmentsWithoutBudget %></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-200">
+            <div class="flex items-center">
+                <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                    <i class="fas fa-calculator text-xl"></i>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-600">Total Salary Cost</p>
+                    <p class="text-2xl font-bold text-gray-900">₹<%= salaryCosts.reduce((sum, dept) => sum + (dept.totalSalary || 0), 0).toLocaleString() %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Charts Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <!-- Salary Costs by Department -->
+        <div class="bg-white rounded-lg shadow-md border border-gray-200 p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">Salary Costs by Department</h3>
+            <div class="relative h-72">
+                <canvas id="salaryCostsChart"></canvas>
+            </div>
+        </div>
+        
+        <!-- Salary by Job Title -->
+        <div class="bg-white rounded-lg shadow-md border border-gray-200 p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">Average Salary by Job Title</h3>
+            <div class="relative h-72">
+                <canvas id="salaryByJobTitleChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Department Financial Analysis -->
+    <div class="bg-white rounded-lg shadow-md border border-gray-200 p-6 mb-8 overflow-hidden">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">Department Financial Analysis</h3>
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Department</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Budget</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Salary</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Variance</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employees</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cost per Employee</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <% salaryCosts.forEach(dept => { %>
+                    <tr class="hover:bg-gray-50 transition-colors duration-150">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><%= dept.name %></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">₹<%= dept.budget ? dept.budget.toLocaleString() : '0' %></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">₹<%= dept.totalSalary ? dept.totalSalary.toLocaleString() : '0' %></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <% if (dept.budgetVariance > 0) { %>
+                                <span class="text-green-600 font-medium">+₹<%= dept.budgetVariance.toLocaleString() %></span>
+                            <% } else if (dept.budgetVariance < 0) { %>
+                                <span class="text-red-600 font-medium">₹<%= dept.budgetVariance.toLocaleString() %></span>
+                            <% } else { %>
+                                <span class="text-gray-600">₹0</span>
+                            <% } %>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><%= dept.employeeCount %></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">₹<%= Math.round(dept.avgSalary || 0).toLocaleString() %></td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Cost per Employee Analysis -->
+    <div class="bg-white rounded-lg shadow-md border border-gray-200 p-6 mb-8">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">Cost per Employee Analysis</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <% costPerEmployee.forEach(dept => { %>
+            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-lg transition-shadow duration-200">
+                <div class="flex items-center justify-between mb-2">
+                    <h4 class="font-medium text-gray-900"><%= dept.name %></h4>
+                    <span class="text-lg font-bold text-indigo-600">₹<%= Math.round(dept.costPerEmployee).toLocaleString() %></span>
+                </div>
+                <p class="text-sm text-gray-600 mb-3"><%= dept.employeeCount %> employees</p>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between">
+                        <span class="text-gray-700">Total Salary:</span>
+                        <span class="font-medium text-gray-900">₹<%= dept.totalSalary.toLocaleString() %></span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-700">Budget:</span>
+                        <span class="font-medium text-gray-900">₹<%= dept.budget ? dept.budget.toLocaleString() : '0' %></span>
+                    </div>
+                </div>
+            </div>
+            <% }); %>
+        </div>
+    </div>
+    
+    <!-- Salary by Job Title Analysis -->
+    <div class="bg-white rounded-lg shadow-md border border-gray-200 p-6">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">Salary Analysis by Job Title</h3>
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Job Title</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Count</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Avg Salary</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Min Salary</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Max Salary</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Cost</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <% salaryByJobTitle.forEach(job => { %>
+                    <tr class="hover:bg-gray-50 transition-colors duration-150">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><%= job._id %></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><%= job.count %></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">₹<%= Math.round(job.avgSalary).toLocaleString() %></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">₹<%= job.minSalary.toLocaleString() %></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">₹<%= job.maxSalary.toLocaleString() %></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">₹<%= job.totalSalary.toLocaleString() %></td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/js/main.js"></script>
+
+<script>
+    // Salary Costs Chart
+    const salaryCostsCtx = document.getElementById('salaryCostsChart').getContext('2d');
+    new Chart(salaryCostsCtx, {
+        type: 'bar',
+        data: {
+            labels: [<% salaryCosts.forEach((dept, index) => { %>'<%= dept.name %>'
+            <%= index < salaryCosts.length - 1 ? ',' : '' %>
+            <% }); %>],
+            datasets: [{
+                label: 'Total Salary Cost',
+                data: [<% salaryCosts.forEach((dept, index) => { %><%= dept.totalSalary || 0 %>
+                <%= index < salaryCosts.length - 1 ? ',' : '' %>
+                <% }); %>],
+                backgroundColor: '#4F46E5' // indigo-600
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: '#4B5563' // text-gray-600
+                    },
+                    grid: {
+                        color: '#E5E7EB' // border-gray-200
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: '#4B5563' // text-gray-600
+                    },
+                    grid: {
+                        color: '#E5E7EB' // border-gray-200
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+    
+    // Salary by Job Title Chart
+    const salaryByJobTitleCtx = document.getElementById('salaryByJobTitleChart').getContext('2d');
+    new Chart(salaryByJobTitleCtx, {
+        type: 'bar',
+        data: {
+            labels: [<% salaryByJobTitle.slice(0, 10).forEach((job, index) => { %>'<%= job._id %>'
+            <%= index < Math.min(salaryByJobTitle.length, 10) - 1 ? ',' : '' %>
+            <% }); %>],
+            datasets: [{
+                label: 'Average Salary',
+                data: [<% salaryByJobTitle.slice(0, 10).forEach((job, index) => { %><%= Math.round(job.avgSalary) %>
+                <%= index < Math.min(salaryByJobTitle.length, 10) - 1 ? ',' : '' %>
+                <% }); %>],
+                backgroundColor: '#10B981' // green-500
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: '#4B5563' // text-gray-600
+                    },
+                    grid: {
+                        color: '#E5E7EB' // border-gray-200
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: '#4B5563' // text-gray-600
+                    },
+                    grid: {
+                        color: '#E5E7EB' // border-gray-200
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+</script>

@@ -1,0 +1,223 @@
+<div class="p-4 lg:p-6">
+    <!-- Welcome Section -->
+    <div class="text-center mb-6 lg:mb-8">
+        <h2 class="font-bold text-gray-800 mb-2 text-3xl lg:text-4xl">Welcome to Office Management System</h2>
+        <p class="text-gray-600 text-base lg:text-lg max-w-2xl mx-auto">Manage your departments, employees, and organizational structure efficiently.</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
+        <!-- Total Employees -->
+        <div class="bg-white rounded-lg shadow-md p-4 lg:p-6 border border-gray-200 hover:shadow-lg transition-shadow duration-200">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <div class="w-10 h-10 lg:w-12 lg:h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-users text-blue-600 text-xl lg:text-2xl"></i>
+                    </div>
+                </div>
+                <div class="ml-3 lg:ml-4">
+                    <p class="text-xs lg:text-sm font-medium text-gray-600">Total Employees</p>
+                    <p class="text-xl lg:text-2xl font-bold text-gray-900" id="total-employees">-</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Departments -->
+        <div class="bg-white rounded-lg shadow-md p-4 lg:p-6 border border-gray-200 hover:shadow-lg transition-shadow duration-200">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <div class="w-10 h-10 lg:w-12 lg:h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-sitemap text-green-600 text-xl lg:text-2xl"></i>
+                    </div>
+                </div>
+                <div class="ml-3 lg:ml-4">
+                    <p class="text-xs lg:text-sm font-medium text-gray-600">Total Departments</p>
+                    <p class="text-xl lg:text-2xl font-bold text-gray-900" id="total-departments">-</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Hires (This Month) -->
+        <div class="bg-white rounded-lg shadow-md p-4 lg:p-6 border border-gray-200 hover:shadow-lg transition-shadow duration-200">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <div class="w-10 h-10 lg:w-12 lg:h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-user-plus text-indigo-600 text-xl lg:text-2xl"></i>
+                    </div>
+                </div>
+                <div class="ml-3 lg:ml-4">
+                    <p class="text-xs lg:text-sm font-medium text-gray-600">New Hires</p>
+                    <p class="text-xl lg:text-2xl font-bold text-gray-900">12</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Projects -->
+        <div class="bg-white rounded-lg shadow-md p-4 lg:p-6 border border-gray-200 hover:shadow-lg transition-shadow duration-200">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <div class="w-10 h-10 lg:w-12 lg:h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-project-diagram text-orange-600 text-xl lg:text-2xl"></i>
+                    </div>
+                </div>
+                <div class="ml-3 lg:ml-4">
+                    <p class="text-xs lg:text-sm font-medium text-gray-600">Active Projects</p>
+                    <p class="text-xl lg:text-2xl font-bold text-gray-900">24</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-6 lg:mb-8">
+        <!-- Quick Actions Card -->
+        <div class="bg-white rounded-lg shadow-md p-4 lg:p-6 border border-gray-200">
+            <h3 class="text-lg lg:text-xl font-semibold text-gray-800 mb-4">Quick Actions</h3>
+            <div class="space-y-3 lg:space-y-4">
+                <a href="/employees/new" class="flex items-center p-3 lg:p-4 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition-colors duration-200">
+                    <div class="w-9 h-9 lg:w-10 lg:h-10 bg-indigo-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-user-plus text-white text-base lg:text-lg"></i>
+                    </div>
+                    <div class="ml-3 lg:ml-4 flex-1">
+                        <p class="text-sm lg:text-base font-medium text-gray-900">Add New Employee</p>
+                        <p class="text-xs text-gray-600 hidden sm:block">Register a new team member</p>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400 ml-auto text-sm"></i>
+                </a>
+
+                <a href="/departments/new" class="flex items-center p-3 lg:p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors duration-200">
+                    <div class="w-9 h-9 lg:w-10 lg:h-10 bg-green-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-plus text-white text-base lg:text-lg"></i>
+                    </div>
+                    <div class="ml-3 lg:ml-4 flex-1">
+                        <p class="text-sm lg:text-base font-medium text-gray-900">Create Department</p>
+                        <p class="text-xs text-gray-600 hidden sm:block">Set up a new department</p>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400 ml-auto text-sm"></i>
+                </a>
+
+                <a href="/employees" class="flex items-center p-3 lg:p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors duration-200">
+                    <div class="w-9 h-9 lg:w-10 lg:h-10 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-search text-white text-base lg:text-lg"></i>
+                    </div>
+                    <div class="ml-3 lg:ml-4 flex-1">
+                        <p class="text-sm lg:text-base font-medium text-gray-900">Search Employees</p>
+                        <p class="text-xs text-gray-600 hidden sm:block">Find and manage employees</p>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400 ml-auto text-sm"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="bg-white rounded-lg shadow-md p-4 lg:p-6 border border-gray-200">
+            <h3 class="text-lg lg:text-xl font-semibold text-gray-800 mb-4">Recent Activity</h3>
+            <div class="space-y-3 lg:space-y-4">
+                <div class="flex items-start">
+                    <div class="w-2 h-2 bg-indigo-600 rounded-full flex-shrink-0 mt-2"></div>
+                    <div class="ml-3 flex-1">
+                        <p class="text-sm text-gray-900">New employee John Smith added to Engineering</p>
+                        <p class="text-xs text-gray-500">2 hours ago</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start">
+                    <div class="w-2 h-2 bg-green-600 rounded-full flex-shrink-0 mt-2"></div>
+                    <div class="ml-3 flex-1">
+                        <p class="text-sm text-gray-900">Marketing department budget updated</p>
+                        <p class="text-xs text-gray-500">5 hours ago</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start">
+                    <div class="w-2 h-2 bg-purple-600 rounded-full flex-shrink-0 mt-2"></div>
+                    <div class="ml-3 flex-1">
+                        <p class="text-sm text-gray-900">Sarah Johnson promoted to Team Lead</p>
+                        <p class="text-xs text-gray-500">1 day ago</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start">
+                    <div class="w-2 h-2 bg-orange-600 rounded-full flex-shrink-0 mt-2"></div>
+                    <div class="ml-3 flex-1">
+                        <p class="text-sm text-gray-900">New department 'Data Science' created</p>
+                        <p class="text-xs text-gray-500">2 days ago</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-4 border-t border-gray-200">
+                <a href="#" class="text-sm text-indigo-600 hover:text-indigo-800 font-medium transition-colors duration-200">View all activity →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Department Overview -->
+    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6 border border-gray-200">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 lg:mb-6 gap-2">
+            <h3 class="text-lg lg:text-xl font-semibold text-gray-800">Department Overview</h3>
+            <a href="/departments" class="text-sm text-indigo-600 hover:text-indigo-800 font-medium transition-colors duration-200">View all departments →</a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="p-3 lg:p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-900">Engineering</p>
+                        <p class="text-xs text-gray-600">25 employees</p>
+                    </div>
+                    <div class="w-8 h-8 lg:w-9 lg:h-9 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-code text-blue-600 text-sm lg:text-base"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-3 lg:p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-900">Marketing</p>
+                        <p class="text-xs text-gray-600">12 employees</p>
+                    </div>
+                    <div class="w-8 h-8 lg:w-9 lg:h-9 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-bullhorn text-green-600 text-sm lg:text-base"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-3 lg:p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-900">Sales</p>
+                        <p class="text-xs text-gray-600">18 employees</p>
+                    </div>
+                    <div class="w-8 h-8 lg:w-9 lg:h-9 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-chart-line text-purple-600 text-sm lg:text-base"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Load dashboard statistics
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        // Load departments count
+        const deptResponse = await fetch('/api/departments');
+        if (deptResponse.ok) {
+            const deptData = await deptResponse.json();
+            document.getElementById('total-departments').textContent = deptData.data.length;
+        }
+
+        // Load employees count
+        const empResponse = await fetch('/api/employees');
+        if (empResponse.ok) {
+            const empData = await empResponse.json();
+            document.getElementById('total-employees').textContent = empData.pagination.totalEmployees;
+        }
+    } catch (error) {
+        console.error('Error loading dashboard stats:', error);
+    }
+});
+</script>
