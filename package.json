@@ -2,10 +2,12 @@
   "name": "office-management-system",
   "version": "1.0.0",
   "description": "A RESTful Office Management System built with Node.js, Express, and MongoDB for managing departments and employees.",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js",
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "seed": "node scripts/seed.js",
+    "seed:confirm": "node scripts/seed-with-confirmation.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
