@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -7,6 +8,7 @@ const flash = require('connect-flash');
 const cookieParser = require('cookie-parser');
 const expressLayouts = require('express-ejs-layouts');
 const config = require('./config/config');
+const PORT = process.env.PORT || 10000;
 
 // Import database connection
 const connectDB = require('./config/database');
@@ -94,7 +96,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-const PORT = process.env.PORT || 3000;
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
